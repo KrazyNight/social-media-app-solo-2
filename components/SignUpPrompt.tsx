@@ -1,5 +1,6 @@
 import React from "react";
-import SignUpModel from "./modals/SignUpModel";
+import SignUpModel from "./modals/SignUpModal";
+import LogInModal from "./modals/LogInModal";
 
 export default function SignUpPrompt() {
   return (
@@ -15,12 +16,13 @@ export default function SignUpPrompt() {
         </div>
 
         <div className="flex space-x-2 w-full md:w-fit p-3  ">
-          <button className="w-full h-[48px] md:w-[88px] md:h-[40px] text-md md:text-sm border-2 border-gray-100 rounded-full text-white font-bold hover:bg-white hover:bg-opacity-25 transition    ">
+          {/* <button className="w-full h-[48px] md:w-[88px] md:h-[40px] text-md md:text-sm border-2 border-gray-100 rounded-full text-white font-bold hover:bg-white hover:bg-opacity-25 transition    ">
             Log In
-          </button>
+          </button> */}
           {/* <button className="w-full h-[48px] md:w-[88px] md:h-[40px] text-md md:text-sm border-2 border-white bg-white rounded-full font-bold hover:bg-gray-100 transition    ">
           Sign In
         </button>  */}
+        <LogInModal />
 
           <SignUpModel />
 
