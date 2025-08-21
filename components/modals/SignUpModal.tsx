@@ -2,22 +2,14 @@
 
 import { closeSignInModal, openSignInModal } from "@/redux/slices/modalSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
-// import { closeSignInModal, openLogInModal, openSignInModal } from "@/redux/slices/modalSlice";
-// import { AppDispatch, RootState } from "@/redux/store";
-// import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { Modal } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useDispatch, useSelector } from "react-redux";
 
 export default function SignUpModal() {
   const [showPassword, setShowPassword] = useState(false);
-  // const isOpen = useSelector(
-  //   (state: RootState) => state.modals.signInModalOpen
-  // );
-  // const dispatch: AppDispatch = useDispatch();
+  
   const isOpen = useSelector(
     (state: RootState) => state.modals.signInModalOpen
   );
@@ -38,6 +30,12 @@ export default function SignUpModal() {
         className="flex justify-center items-center "
       >
         <div className="w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl  ">
+          <XMarkIcon
+            className="w-7 mt-5 ml-5 cursor-pointer "
+            onClick={() => dispatch(closeSignInModal())}
+          />
+
+
           <form className="pt-10 pb-20 px-4 sm:px-20   ">
             <h1 className="text-3xl font-bold mb-10  ">Create your account</h1>
             <div className="w-full space-y-5 mb-10  ">
