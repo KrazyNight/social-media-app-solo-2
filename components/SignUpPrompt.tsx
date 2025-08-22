@@ -14,16 +14,19 @@ import { RootState } from "@/redux/store";
 export default function SignUpPrompt() {
 
   
-  const username = useSelector((state: RootState) =>
-  state.user.username
-  );
+  // const username = useSelector((state: RootState) =>
+  // state.user.username
+  // );
 
   //delete above when practicing again
+
+  const username = useSelector((state: RootState) => state.user.username);
 
 
 
   return (
     !username &&
+    // !username &&
     //if username doesn't exist, then render everything below, 
 
     // delete above when practicing again
