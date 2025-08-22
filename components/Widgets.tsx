@@ -10,7 +10,7 @@ export default function Widgets() {
     <>
       <div
         className="p-3
-    flex flex-col space-y-4 w-[400px] 
+    flex flex-col space-y-4 w-[400px] pl-10
     "
       >
         <div

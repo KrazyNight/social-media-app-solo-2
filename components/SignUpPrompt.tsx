@@ -1,9 +1,32 @@
+"use client"
+//delete above when practicing again
+
+
 import React from "react";
 import SignUpModel from "./modals/SignUpModal";
 import LogInModal from "./modals/LogInModal";
 
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+//
+
 export default function SignUpPrompt() {
+
+  
+  const username = useSelector((state: RootState) =>
+  state.user.username
+  );
+
+  //delete above when practicing again
+
+
+
   return (
+    !username &&
+    //if username doesn't exist, then render everything below, 
+
+    // delete above when practicing again
     <>
       <div
         className="fixed bottom-0 flex justify-center items-center w-full h-[80px] bg-[#F4AF01] md:space-x-5
