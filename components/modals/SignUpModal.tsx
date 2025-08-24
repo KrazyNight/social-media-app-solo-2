@@ -3,14 +3,15 @@
 //import { auth } from "@/firebase";
 import { closeSignInModal, openSignInModal } from "@/redux/slices/modalSlice";
 //import { signInUser } from "@/redux/slices/userSlice";
-//import { signInUser } from "@/redux/slices/userSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
 //import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
-//import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { auth } from "@/firebase";
+import { signInUser } from "@/redux/slices/userSlice";
 
 
 export default function SignUpModal() {
@@ -19,15 +20,15 @@ export default function SignUpModal() {
   //const [email, setEmail] = useState('');
   //const [password, setPassword] = useState('');
 //
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState(""); 
+const [name, setName] = useState("");
 
-
-  const [showPassword, setShowPassword] = useState(false);
+const [showPassword, setShowPassword] = useState(false);
   const isOpen = useSelector(
     (state: RootState) => state.modals.signInModalOpen
   );
   const dispatch: AppDispatch = useDispatch();
-
-
 
 //
 
@@ -67,6 +68,56 @@ export default function SignUpModal() {
 // }, [])
 
 //
+ 
+  async function handleSignUp() {
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await updateProfile(userCredentials.user, {
+      displayName: name,
+
+    });
+    dispatch(signInUser({
+      name: userCredentials.user.displayName,
+      username: userCredentials.user.email!.split("@")[0],
+      email: userCredentials.user.email,
+      uid: userCredentials.user.uid,
+    }))
+  }
+
+
+  //this was copy/paste form LogInModal
+
+  async function handleGuestLogIn() {
+      await signInWithEmailAndPassword(
+        auth,
+        "guest123@gmail.com",
+        "123456789"
+      );
+    }
+
+  //this was copy/paste from LogInModal
+
+  useEffect(() => {
+    //keep track of onAuthStateChange
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) return 
+
+      //redux actions
+      dispatch(signInUser({
+        name: currentUser.displayName,
+        username: currentUser.email!.split("@")[0],
+        email: currentUser.email,
+        uid: currentUser.uid,
+      }))
+
+    })
+    return unsubscribe
+  }, [])
+  
+  
 
   return (
     <>
@@ -97,6 +148,8 @@ export default function SignUpModal() {
               outline-none pl-3 rounded-[4px] focus:border-[#F4AF01] transition    "
                 placeholder="Name"
                 type="text"
+                onChange={(event) => setName(event.target.value)}
+                value={name}
 
                 //
                 // onChange={(event) => setName(event.target.value)}
@@ -109,6 +162,8 @@ export default function SignUpModal() {
               outline-none pl-3 rounded-[4px] focus:border-[#F4AF01] transition    "
                 placeholder="Email"
                 type="email"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
 //
                 //onChange={(event) => setEmail(event.target.value)}
                 //value={email}
@@ -124,6 +179,9 @@ flex items-center overflow-hidden pr-3  "
                   className="w-full h-full pl-3 outline-none  "
                   placeholder="Password"
                   type={showPassword ? "text": "Password"}
+
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
 //
                   // onChange={(event) => setPassword(event.target.value)}
                   // value={password}
@@ -140,6 +198,7 @@ flex items-center overflow-hidden pr-3  "
 <button
               className="bg-[#F4AF01] text-white h-[48px]
           rounded-full shadow-md mb-5 w-full  "
+          onClick={() => handleSignUp()}
 
   //
         //  onClick={() => handleSignUp()}
@@ -153,9 +212,13 @@ flex items-center overflow-hidden pr-3  "
             <button
               className="bg-[#F4AF01] text-white h-[48px]
           rounded-full shadow-lg mb-5 w-full "
-              // onClick={() => dispatch(openLogInModal())}
+
+          //
+          onClick={() => handleGuestLogIn()}
+              // onClick={() => handleGuestLogIn()}
+
             >
-              Log In
+              Log In as Guest
             </button>
             
           </div>

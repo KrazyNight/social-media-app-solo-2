@@ -19,11 +19,13 @@ export default function SignUpPrompt() {
   // );
 
   //delete above when practicing again
+  const name = useSelector((state: RootState)=> state.user.name);
 
 
 
 
   return (
+    !name &&
     // !username &&
     //if username doesn't exist, then render everything below, 
 
