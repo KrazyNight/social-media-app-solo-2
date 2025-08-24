@@ -3,6 +3,11 @@ import PostInput from './PostInput'
 import Post from './Post'
 
 export default function PostFeed() {
+//db
+
+
+//db
+
   return (
     <>
     <div className='flex-grow 
