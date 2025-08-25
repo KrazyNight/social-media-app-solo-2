@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PostInput from './PostInput'
 import Post from './Post'
+import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore'
+import { db } from '@/firebase'
 
 export default function PostFeed() {
+
+
 //db
+const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
+
+useEffect(() => {
+  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const snapshotDocs = snapshot.docs
+
+    setPosts(snapshotDocs)
+    
+  })
+  return unsubscribe
+
+}, [])
+
 
 
 //db
@@ -22,7 +41,19 @@ export default function PostFeed() {
             Home
         </div>
     <PostInput /> 
-    <Post />
+
+
+    {/* //dv  */}
+    {posts.map(post => <Post
+      key={post.id}
+      data={post.data()}
+
+
+    />)}
+
+    {/* //db : afterward make you Post.tsx dynamic */}
+
+
     </div>
     </>
   )
