@@ -1,35 +1,55 @@
 //db
 "use client"
-import { db } from '@/firebase';
-import { RootState } from '@/redux/store';
+import { db } from '@/firebase'
+import { RootState } from '@/redux/store'
+//import { db } from '@/firebase';
+//import { RootState } from '@/redux/store';
 //db
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, } from 'firebase/firestore'
+// import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
+//import { useSelector } from 'react-redux';
 
 export default function PostInput() {
-//db
-  const [text, setText] = useState(""); 
+// //db
+//   const [text, setText] = useState(""); 
+//   const user = useSelector((state: RootState) => state.user)
+
+//   async function sendPost() {
+//     await addDoc(collection(db, "posts "), {
+//       //what do we want to have inside of the post: who wrote the most?(use Redux), text/comment,
+//       text: text,
+//       name: user.name,
+//       username: user.username,
+//       timestamp: serverTimestamp(),
+//       likes: [],
+//       comments: []  
+//     });
+// // after we have sent the post/comment to the db, we need the text in the input to disapear
+//     setText("");
+    
+
+//   }
+// //db the "posts" comes from the website, db
+
+  const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user)
 
   async function sendPost() {
-    await addDoc(collection(db, "posts "), {
-      //what do we want to have inside of the post: who wrote the most?(use Redux), text/comment,
+    await addDoc(collection(db, "posts"), {
       text: text,
       name: user.name,
       username: user.username,
       timestamp: serverTimestamp(),
       likes: [],
-      comments: []  
-    });
-// after we have sent the post/comment to the db, we need the text in the input to disapear
-    setText("");
-    
+      comments: []
+    })
 
+    setText("")
   }
-//db the "posts" comes from the website, db
 
   return (
     <>
@@ -49,10 +69,16 @@ export default function PostInput() {
             bg-slate-50
             '
             placeholder="What's happening!?"
-            //db
+
             onChange={(event) => setText(event.target.value)}
             value={text}
-            //db
+
+            // //db
+            // onChange={(event) => setText(event.target.value)}
+            // value={text}
+            // //db
+
+
             />
 
 
@@ -68,12 +94,16 @@ export default function PostInput() {
                 </div>
                 <button
                 className='bg-[#F4AF01] text-white w-[80px] h-[36px] rounded-full
-                text-sm cursor-pointer disabled:bg-opacity-60
-                '
-                //db
+                text-sm cursor-pointer disabled:bg-opacity-60  '
+
                 disabled={!text}
                 onClick={() => sendPost()}
-                //db
+
+                // //db
+                // disabled={!text}
+                // onClick={() => sendPost()}
+                // //db
+
                 >Bumble
                 </button>
             </div>

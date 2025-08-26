@@ -1,31 +1,50 @@
+"use client"
+//maybe delete above
+
 import React, { useEffect, useState } from 'react'
 import PostInput from './PostInput'
 import Post from './Post'
 import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
+//import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from 'firebase/firestore'
+//import { db } from '@/firebase'
 
 export default function PostFeed() {
 
 
-//db
-const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
+// //db
+// const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
 
-useEffect(() => {
-  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
+// useEffect(() => {
+//   const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
 
-  const unsubscribe = onSnapshot(q, (snapshot) => {
-    const snapshotDocs = snapshot.docs
+//   const unsubscribe = onSnapshot(q, (snapshot) => {
+//     const snapshotDocs = snapshot.docs
 
-    setPosts(snapshotDocs)
+//     setPosts(snapshotDocs)
     
-  })
-  return unsubscribe
+//   })
+//   return unsubscribe
 
-}, [])
+// }, [])
 
 
 
 //db
+
+  const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const snapshotDocs = snapshot.docs
+
+      setPosts(snapshotDocs)
+    })
+
+    return unsubscribe
+  }, [])
 
   return (
     <>
@@ -42,18 +61,26 @@ useEffect(() => {
         </div>
     <PostInput /> 
 
+    {posts.map(post => <Post 
+    key={post.id}
+    data={post.data()}
 
-    {/* //dv  */}
+    />)}
+
+
+    {/* 
+    
     {posts.map(post => <Post
       key={post.id}
       data={post.data()}
 
 
-    />)}
+    />)} 
+    */}
 
     {/* //db : afterward make you Post.tsx dynamic */}
-
-
+    {/* delete bottom */}
+    {/* <Post /> */}
     </div>
     </>
   )

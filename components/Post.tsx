@@ -6,25 +6,40 @@ import React from "react";
 import Moment from "react-moment"
 
 //db
+//
+// interface PostProps {
+//   data: DocumentData
+// }
+
+//db 
+//bf: 
+
 interface PostProps {
   data: DocumentData
 }
 
-//db 
-//bf: export default function Post() {
 export default function Post({ data }: PostProps) {
+//export default function Post({ data }: PostProps) {
   return (
     <>
       <div className="border-b border-gray-300  ">
         {/* bf: <PostHeader /> */}
+        <PostHeader 
+        username={data.username}
+        name={data.name}
+        timestamp={data.timestamp}
+        text={data.text}
 
+        />
 
+{/* 
         <PostHeader
         username={data.username}
         name={data.name}
         timestamp={data.timestamp}
         text={data.text}
-        />
+        /> 
+*/}
 
 
         {/* db: bf  */}
@@ -77,16 +92,24 @@ export default function Post({ data }: PostProps) {
 //export function PostHeader() {
 
 
-//db
-interface PostHeaderProps {
-  username: string,
-  name: string,
-  timestamp: Timestamp,
-  text: string 
-}
-//db
+// //db
+// interface PostHeaderProps {
+//   username: string,
+//   name: string,
+//   timestamp: Timestamp,
+//   text: string 
+// }
+// //db
 
-export function PostHeader({ username, name, timestamp, text }: PostHeaderProps) {
+interface PostHeaderProps {
+  name: string,
+  username: string,
+  timestamp: Timestamp,
+  text: string
+}
+
+export function PostHeader({ name, username, timestamp, text }: PostHeaderProps){ 
+//export function PostHeader({ username, name, timestamp, text }: PostHeaderProps) {
   return (
     <>
       <div className="flex p-3 space-x-5 ">
@@ -107,8 +130,9 @@ export function PostHeader({ username, name, timestamp, text }: PostHeaderProps)
             ">
               {/* db */}
 
-
               {name}
+              {/* Name Guest */}
+              {/* {name} */}
 
               {/* db */}
 
@@ -121,25 +145,36 @@ export function PostHeader({ username, name, timestamp, text }: PostHeaderProps)
             "
             >
               {/* db */}
-
               @{username}
+              {/* @username Guest */}
+
+              {/* @{username} */}
 
             {/* db */}
             </span>
             {/* bf: <span>{timestamp}</span> */}
             
             <span> · </span>
+            
+            {
+              timestamp &&
 
+            <Moment fromNow> 
+            {timestamp.toDate()}
+            </Moment>
+            }
 
+            {/* <span>a day ago </span> */}
             {/* db */}
-
+{/* 
             {
               timestamp &&
             <Moment fromNow>
 
             {timestamp.toDate()}
             </Moment>
-            }
+            } 
+*/}
 
             {/* db */}
 
@@ -147,7 +182,11 @@ export function PostHeader({ username, name, timestamp, text }: PostHeaderProps)
             
           </div>
 
-          <span> {text} </span>
+          <span> 
+            {text}
+            {/* {text}  */}
+            {/* text/ coment  */}
+            </span>
         </div>
 
 
