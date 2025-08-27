@@ -25,13 +25,13 @@ import { useDispatch } from "react-redux";
 interface PostProps {
   data: DocumentData;
 //del comment below
-  id: string;
+
 }
 
-export default function Post({ data, id }: PostProps) {
+export default function Post({ data }: PostProps) {
   //export default function Post({ data, id }: PostProps) {
 //del comment
-  const dispatch: AppDispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
 // del comment
 
 
@@ -63,15 +63,6 @@ export default function Post({ data, id }: PostProps) {
                 hover:text-[#F4AF01] transition "
 
 //del comment
-onClick={() => {
-  dispatch(setCommentDetails({
-    name: data.name,
-    username: data.username,
-    id: id,
-    text: data.next,
-  }))
-  dispatch(openCommentModal())
-}}
               
 
               // onClick={() => {
@@ -139,7 +130,7 @@ interface PostHeaderProps {
   text: string;
   
 // del comment below
-  replyTo?: string;
+  // replyTo?: string;
 //del comment above
 
 }
@@ -151,7 +142,7 @@ export function PostHeader({
   text,
 
 // del comment below
-  replyTo,
+  // replyTo,
 // del comment below
 
 }: PostHeaderProps) {
@@ -165,7 +156,7 @@ export function PostHeader({
           height={44}
           alt="Profile-Pic" 
 
-          className="w-11 h-11 z-10 bg-white" 
+          className="w-11 h-11 " 
 //del comment z-score
         />
 
@@ -225,12 +216,7 @@ export function PostHeader({
           <span>{text}</span>
 
           {/* del below */}
-          {replyTo && (
-          <span className="text-[15px] text-[#707e89]  ">Replying to 
-            <span className="text-[#f4af01]  ">@{replyTo}</span>
-          </span>
-
-        )}
+          
           
 
 

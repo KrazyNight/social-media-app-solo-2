@@ -11,12 +11,12 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 //del comment
-interface PostInputProps {
-  insideModal?: boolean
-}
+// interface PostInputProps {
+//   insideModal?: boolean
+// }
 //del comment , also del the bottom continuation 
 
-export default function PostInput({ insideModal }: PostInputProps) {
+export default function PostInput() {
 // //db
 //   const [text, setText] = useState(""); 
 //   const user = useSelector((state: RootState) => state.user)
@@ -41,10 +41,10 @@ export default function PostInput({ insideModal }: PostInputProps) {
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user)
 
-  //del below comment
-  const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails);
-  const dispatch: AppDispatch = useDispatch();
-  //del above comments
+  // //del below comment
+  // const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails);
+  // const dispatch: AppDispatch = useDispatch();
+  // //del above comments
 
   async function sendPost() {
     await addDoc(collection(db, "posts"), {
@@ -59,42 +59,40 @@ export default function PostInput({ insideModal }: PostInputProps) {
     setText("");
   }
 
-// del comment below
-  async function sendComment() {
-    const postRef = doc(db, "posts", commentDetails.id);
+// // del comment below
+//   async function sendComment() {
+//     const postRef = doc(db, "posts", commentDetails.id);
     
-    await updateDoc(postRef, {
-      comments: arrayUnion({
-        name: user.name,
-        username: user.username,
-        text: text,
-      }),
-    });
+//     await updateDoc(postRef, {
+//       comments: arrayUnion({
+//         name: user.name,
+//         username: user.username,
+//         text: text,
+//       }),
+//     });
 
-    setText("");
-    dispatch(closeCommentModal());
-  }
+//     setText("");
+//     dispatch(closeCommentModal());
+//   }
   
-//del comment above
+// del comment above
   return (
     <>
     <div className='flex space-x-5 p-3 
     border-b border-gray-300
     '>
         <Image 
-        src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
+        // src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
 //del comment above
-//src="/assets/busybee-logo2.png"  
-
-
+        src="/assets/busybee-logo2.png"  
         width={44}
         height={44 }
 
 
-        alt={insideModal ? "Profile Picture " : "Logo"}
+        // alt={insideModal ? "Profile Picture " : "Logo"}
 //del comment above
-//alt= "Logo"
-        className='w-11 h-11 z-10 bg-white'
+alt= "Logo"
+        className='w-11 h-11 '
 //del comment z-score and bg-white
         />
         <div className='w-full bg-slate-50 '>
@@ -102,9 +100,9 @@ export default function PostInput({ insideModal }: PostInputProps) {
             min-h-[50px] text-lg
             bg-slate-50
             '
-            placeholder={insideModal ? "Send your reply" : "What's happening!?"}
+            // placeholder={insideModal ? "Send your reply" : "What's happening!?"}
 //del above
-// placeholder= ""What's happening!?""
+            placeholder= "What's happening!?"
             onChange={(event) => setText(event.target.value)}
             value={text}
 
@@ -134,11 +132,11 @@ export default function PostInput({ insideModal }: PostInputProps) {
                 disabled={!text}
 
 //del comment below
-                onClick={() => insideModal ? sendComment() : sendPost()}
+                // onClick={() => insideModal ? sendComment() : sendPost()}
   
                 
                 // disabled={!text}
-// onClick={() => sendPost()}
+                onClick={() => sendPost()}
 //del comment above
 
                 >Bumble

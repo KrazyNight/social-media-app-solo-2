@@ -5,13 +5,6 @@ const initialState = {
   logInModalOpen: false,
 
   //del comment
-  commentModalOpen: false,
-  commentPostDetails: {
-      name: "",
-      username: "",
-      id: "",
-      text: "",
-  }
 
   // commentModalOpen: false,
   // commentPostDetails: {
@@ -40,18 +33,6 @@ const modalSlice = createSlice({
     },
 
 //del comment
-    openCommentModal: (state) => {
-      state.commentModalOpen = true;
-    },
-    closeCommentModal: (state) => {
-      state.commentModalOpen = false;
-    },
-    setCommentDetails: (state, action) => {
-      state.commentPostDetails.name = action.payload.name
-      state.commentPostDetails.username = action.payload.username
-      state.commentPostDetails.id = action.payload.id
-      state.commentPostDetails.text = action.payload.text
-    }
 //del comment
 
     // openCommentModal: (state) => {
@@ -76,9 +57,9 @@ export const {
   closeLogInModal,
 
 //del comment
-  openCommentModal,
-  closeCommentModal,
-  setCommentDetails,
+  // openCommentModal,
+  // closeCommentModal,
+  // setCommentDetails,
 //del comment
 
 
