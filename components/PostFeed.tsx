@@ -11,7 +11,7 @@ import { db } from '@/firebase'
 
 export default function PostFeed() {
 
-
+  
 // //db
 // const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
 

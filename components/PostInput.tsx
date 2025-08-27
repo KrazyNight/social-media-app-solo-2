@@ -1,23 +1,20 @@
 //db
 "use client"
 import { db } from '@/firebase'
-import { RootState } from '@/redux/store'
-//import { db } from '@/firebase';
-//import { RootState } from '@/redux/store';
+import { closeCommentModal, setCommentDetails } from '@/redux/slices/modalSlice'
+import { AppDispatch, RootState } from '@/redux/store'
 //db
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { addDoc, collection, serverTimestamp, } from 'firebase/firestore'
-// import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc, } from 'firebase/firestore'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-//import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 
 //del comment
 interface PostInputProps {
   insideModal?: boolean
 }
-//del comment 
+//del comment , also del the bottom continuation 
 
 export default function PostInput({ insideModal }: PostInputProps) {
 // //db
@@ -44,6 +41,11 @@ export default function PostInput({ insideModal }: PostInputProps) {
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user)
 
+  //del below comment
+  const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails);
+  const dispatch: AppDispatch = useDispatch();
+  //del above comments
+
   async function sendPost() {
     await addDoc(collection(db, "posts"), {
       text: text,
@@ -51,12 +53,29 @@ export default function PostInput({ insideModal }: PostInputProps) {
       username: user.username,
       timestamp: serverTimestamp(),
       likes: [],
-      comments: []
-    })
+      comments: [],
+    });
 
-    setText("")
+    setText("");
   }
 
+// del comment below
+  async function sendComment() {
+    const postRef = doc(db, "posts", commentDetails.id);
+    
+    await updateDoc(postRef, {
+      comments: arrayUnion({
+        name: user.name,
+        username: user.username,
+        text: text,
+      }),
+    });
+
+    setText("");
+    dispatch(closeCommentModal());
+  }
+  
+//del comment above
   return (
     <>
     <div className='flex space-x-5 p-3 
@@ -64,10 +83,19 @@ export default function PostInput({ insideModal }: PostInputProps) {
     '>
         <Image 
         src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
+//del comment above
+//src="/assets/busybee-logo2.png"  
+
+
         width={44}
         height={44 }
+
+
         alt={insideModal ? "Profile Picture " : "Logo"}
+//del comment above
+//alt= "Logo"
         className='w-11 h-11 z-10 bg-white'
+//del comment z-score and bg-white
         />
         <div className='w-full bg-slate-50 '>
             <textarea className='resize-none w-full
@@ -75,7 +103,8 @@ export default function PostInput({ insideModal }: PostInputProps) {
             bg-slate-50
             '
             placeholder={insideModal ? "Send your reply" : "What's happening!?"}
-
+//del above
+// placeholder= ""What's happening!?""
             onChange={(event) => setText(event.target.value)}
             value={text}
 
@@ -103,12 +132,14 @@ export default function PostInput({ insideModal }: PostInputProps) {
                 text-sm cursor-pointer disabled:bg-opacity-60  '
 
                 disabled={!text}
-                onClick={() => sendPost()}
 
-                // //db
+//del comment below
+                onClick={() => insideModal ? sendComment() : sendPost()}
+  
+                
                 // disabled={!text}
-                // onClick={() => sendPost()}
-                // //db
+// onClick={() => sendPost()}
+//del comment above
 
                 >Bumble
                 </button>

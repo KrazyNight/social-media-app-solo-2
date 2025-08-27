@@ -24,13 +24,17 @@ import { useDispatch } from "react-redux";
 
 interface PostProps {
   data: DocumentData;
+//del comment below
   id: string;
 }
 
 export default function Post({ data, id }: PostProps) {
-  //export default function Post({ data }: PostProps) {
-
+  //export default function Post({ data, id }: PostProps) {
+//del comment
   const dispatch: AppDispatch = useDispatch();
+// del comment
+
+
   return (
     <>
       <div className="border-b border-gray-300  ">
@@ -57,22 +61,32 @@ export default function Post({ data, id }: PostProps) {
             <ChatBubbleOvalLeftEllipsisIcon
               className="w-[22px] h-[22px] cursor-pointer
                 hover:text-[#F4AF01] transition "
-              //del comment
+
+//del comment
+onClick={() => {
+  dispatch(setCommentDetails({
+    name: data.name,
+    username: data.username,
+    id: id,
+    text: data.next,
+  }))
+  dispatch(openCommentModal())
+}}
               
 
-              onClick={() => {
+              // onClick={() => {
 
-                dispatch(setCommentDetails({
-                  name: data.name,
-                  username: data.username,
-                  //del comment, go to PostFeet.tsx, add id={post.id}
-                  id: id,
-                  text: data.text,
-                }))
-                dispatch(openCommentModal())
-              }}
+              //   dispatch(setCommentDetails({
+              //     name: data.name,
+              //     username: data.username,
+              //     //del comment, go to PostFeet.tsx, add id={post.id}
+              //     id: id,
+              //     text: data.text,
+              //   }))
+              //   dispatch(openCommentModal())
+              // }}
 
-              //del comment
+//del comment
             />
             <span className="absolute text-xs top-1 -right-3 ">2</span>
           </div>
@@ -123,9 +137,11 @@ interface PostHeaderProps {
   username: string;
   timestamp?: Timestamp;
   text: string;
-  // del below
+  
+// del comment below
   replyTo?: string;
-  //del above
+//del comment above
+
 }
 
 export function PostHeader({
@@ -133,7 +149,11 @@ export function PostHeader({
   username,
   timestamp,
   text,
+
+// del comment below
   replyTo,
+// del comment below
+
 }: PostHeaderProps) {
   //export function PostHeader({ username, name, timestamp, text }: PostHeaderProps) {
   return (
@@ -146,6 +166,7 @@ export function PostHeader({
           alt="Profile-Pic" 
 
           className="w-11 h-11 z-10 bg-white" 
+//del comment z-score
         />
 
         <div className="text-[15px] flex flex-col space-y-2 ">
@@ -161,7 +182,6 @@ export function PostHeader({
 
               {name}
               {/* Name Guest */}
-              {/* {name} */}
 
               {/* db */}
             </span>
@@ -174,7 +194,6 @@ export function PostHeader({
             >
               {/* db */}@{username}
               {/* @username Guest */}
-              {/* @{username} */}
               {/* db */}
             </span>
             {/* bf: <span>{timestamp}</span> */}
@@ -188,9 +207,9 @@ export function PostHeader({
               </>
             )}
 
-            {/* <span>a day ago </span> */}
             {/* db */}
-            {/* 
+            {/* <span>a day ago </span> */}
+{/* 
             {
               timestamp &&
             <Moment fromNow>
@@ -203,21 +222,28 @@ export function PostHeader({
             {/* db */}
           </div>
 
-          <span>
-            {text}
-            {/* {text}  */}
-            {/* text/ coment  */}
-          </span>
+          <span>{text}</span>
 
           {/* del below */}
-
           {replyTo && (
+          <span className="text-[15px] text-[#707e89]  ">Replying to 
+            <span className="text-[#f4af01]  ">@{replyTo}</span>
+          </span>
+
+        )}
+          
+
+
+
+
+
+          {/* {replyTo && (
             <>
               <span className="text-[15px] text-[#707E89] ">
                 Replying to <span className="text-[#F4AF01]  ">@{replyTo}</span>
               </span>
             </>
-          )}
+          )} */}
 
           {/* del above */}
         </div>

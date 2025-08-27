@@ -17,7 +17,12 @@ export default function Home() {
         <Widgets />
 
       </div>
+
+{/* del comment */}
       <CommentModal />
+{/* del comment */}
+
+
       <SignUpPrompt />
     </>
   );

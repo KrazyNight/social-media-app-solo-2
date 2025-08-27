@@ -48,7 +48,11 @@ export default function LogInModal() {
   return (
     <>
       <button
-        className="w-full h-[48px] md:w-[88px] md:h-[40px] text-md md:text-sm border-2 border-white bg-white rounded-full font-bold hover:bg-gray-100 transition    "
+        className="w-full h-[48px] md:w-[88px] md:h-[40px]
+         text-md md:text-sm border-2 border-white
+          bg-white rounded-full font-bold hover:bg-gray-100 
+          transition    "
+          
         onClick={() => dispatch(openLogInModal())}
       >
         Log In
@@ -58,7 +62,8 @@ export default function LogInModal() {
         onClose={() => dispatch(closeLogInModal())}
         className="flex justify-center items-center "
       >
-        <div className="w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl outline-none  ">
+        <div className="w-full h-full sm:w-[600px] sm:h-fit
+         bg-white sm:rounded-xl outline-none  ">
           <XMarkIcon
             className="w-7 mt-5 ml-5 cursor-pointer "
             onClick={() => dispatch(closeLogInModal())}
