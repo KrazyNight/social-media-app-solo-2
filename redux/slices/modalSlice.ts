@@ -3,6 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   signInModalOpen: false,
   logInModalOpen: false,
+  commentModalOpen: false,
+  commentPostDetails: {
+    name: "",
+    username: "",
+    id: "",
+    text: "",
+
+  }
+  
+
+
+
+
+
 
   //del comment
 
@@ -32,6 +46,21 @@ const modalSlice = createSlice({
       state.logInModalOpen = false;
     },
 
+
+
+    openCommentModal: (state) => {
+      state.commentModalOpen = true;
+    },
+    closeCommentModal: (state) => {
+      state.commentModalOpen = false;
+    },
+    setCommentDetails: (state, action) => {
+      state.commentPostDetails.name = action.payload.name
+      state.commentPostDetails.username = action.payload.username
+      state.commentPostDetails.id = action.payload.id
+      state.commentPostDetails.text = action.payload.text
+    }
+
 //del comment
 //del comment
 
@@ -55,6 +84,11 @@ export const {
   closeSignInModal,
   openLogInModal,
   closeLogInModal,
+  
+  openCommentModal,
+  closeCommentModal,
+  setCommentDetails
+  
 
 //del comment
   // openCommentModal,

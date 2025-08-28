@@ -1,11 +1,12 @@
 //db
 "use client"
 import { db } from '@/firebase'
-import { closeCommentModal, setCommentDetails } from '@/redux/slices/modalSlice'
+import { closeCommentModal } from '@/redux/slices/modalSlice'
 import { AppDispatch, RootState } from '@/redux/store'
 //db
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc, } from 'firebase/firestore'
+import App from 'next/app'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +17,10 @@ import { useDispatch, useSelector } from 'react-redux'
 // }
 //del comment , also del the bottom continuation 
 
-export default function PostInput() {
+interface PostInputProps {
+  insideModal?: boolean;
+}
+export default function PostInput({ insideModal }: PostInputProps) {
 // //db
 //   const [text, setText] = useState(""); 
 //   const user = useSelector((state: RootState) => state.user)
@@ -39,8 +43,13 @@ export default function PostInput() {
 // //db the "posts" comes from the website, db
 
   const [text, setText] = useState("");
-  const user = useSelector((state: RootState) => state.user)
+  const user = useSelector((state: RootState) => state.user);
 
+  
+  const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails)
+  const dispatch: AppDispatch = useDispatch()
+  
+  
   // //del below comment
   // const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails);
   // const dispatch: AppDispatch = useDispatch();
@@ -58,6 +67,29 @@ export default function PostInput() {
 
     setText("");
   }
+
+
+
+  async function sendComment() {
+    const postRef = doc(db, "posts", commentDetails.id);
+
+    await updateDoc(postRef, {
+      comments: arrayUnion({
+        name: user.name,
+        username: user.username,
+        text: text,
+      }),
+    });
+
+    setText("");
+    dispatch(closeCommentModal())
+
+
+  }
+
+
+
+
 
 // // del comment below
 //   async function sendComment() {
@@ -82,27 +114,26 @@ export default function PostInput() {
     border-b border-gray-300
     '>
         <Image 
-        // src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
+         src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
 //del comment above
-        src="/assets/busybee-logo2.png"  
+        //src="/assets/busybee-logo2.png" 
+        //src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"} 
         width={44}
         height={44 }
 
-
-        // alt={insideModal ? "Profile Picture " : "Logo"}
+         alt={insideModal ? "Profile Picture " : "Logo"}
 //del comment above
-alt= "Logo"
-        className='w-11 h-11 '
+//alt= "Logo"
+        className='w-11 h-11 z-10 bg-white'
 //del comment z-score and bg-white
         />
-        <div className='w-full bg-slate-50 '>
+        <div className='w-full '>
             <textarea className='resize-none w-full
-            min-h-[50px] text-lg
-            bg-slate-50
-            '
-            // placeholder={insideModal ? "Send your reply" : "What's happening!?"}
+            min-h-[50px] text-lg outline-none   '
+
+             placeholder={insideModal ? "Send your reply" : "What's happening!?"}
 //del above
-            placeholder= "What's happening!?"
+            //placeholder= "What's happening!?"
             onChange={(event) => setText(event.target.value)}
             value={text}
 
@@ -131,12 +162,15 @@ alt= "Logo"
 
                 disabled={!text}
 
+                onClick={() => insideModal ? sendComment() : sendPost()}
+
+
 //del comment below
                 // onClick={() => insideModal ? sendComment() : sendPost()}
   
                 
                 // disabled={!text}
-                onClick={() => sendPost()}
+                //onClick={() => sendPost()}
 //del comment above
 
                 >Bumble

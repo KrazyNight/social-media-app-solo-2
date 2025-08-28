@@ -1,5 +1,5 @@
-import { openCommentModal, setCommentDetails } from "@/redux/slices/modalSlice";
-import { AppDispatch } from "@/redux/store";
+import { openCommentModal, setCommentDetails,  } from "@/redux/slices/modalSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 import {
   ArrowUpTrayIcon,
   ChartBarIcon,
@@ -11,7 +11,7 @@ import Image from "next/image";
 import React from "react";
 //
 import Moment from "react-moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //db
 //
@@ -24,15 +24,21 @@ import { useDispatch } from "react-redux";
 
 interface PostProps {
   data: DocumentData;
+  id: string
+
 //del comment below
+  //id: string;
 
 }
 
-export default function Post({ data }: PostProps) {
+export default function Post({ data, id }: PostProps) {
   //export default function Post({ data, id }: PostProps) {
 //del comment
   // const dispatch: AppDispatch = useDispatch();
 // del comment
+
+  const dispatch: AppDispatch = useDispatch();
+
 
 
   return (
@@ -61,6 +67,28 @@ export default function Post({ data }: PostProps) {
             <ChatBubbleOvalLeftEllipsisIcon
               className="w-[22px] h-[22px] cursor-pointer
                 hover:text-[#F4AF01] transition "
+                
+
+
+                onClick={() => {
+                  dispatch(setCommentDetails({
+                    name: data.name,
+                    username: data.username,
+
+
+                    id: id,
+
+
+                    text: data.text,
+                  }))
+                  dispatch(openCommentModal())
+                }}
+
+             
+                
+                //onClick={() => dispatch(openCommentModal())}
+                // now that we opened the commentModal, we need
+                //...to connect to the new information inside the modal
 
 //del comment
               
@@ -128,6 +156,7 @@ interface PostHeaderProps {
   username: string;
   timestamp?: Timestamp;
   text: string;
+  replyTo?: string;
   
 // del comment below
   // replyTo?: string;
@@ -140,6 +169,8 @@ export function PostHeader({
   username,
   timestamp,
   text,
+  replyTo,
+
 
 // del comment below
   // replyTo,
@@ -156,7 +187,7 @@ export function PostHeader({
           height={44}
           alt="Profile-Pic" 
 
-          className="w-11 h-11 " 
+          className="w-11 h-11 z-10 bg-white" 
 //del comment z-score
         />
 
@@ -214,6 +245,23 @@ export function PostHeader({
           </div>
 
           <span>{text}</span>
+
+          {replyTo && (
+            <>
+          <span className="text-[15px] text-[#707E89]  "  >
+            Replying to <span className="text-[#F4AF01]  ">@username101</span>
+          </span>
+            
+            </>
+          )}
+
+         
+
+
+
+
+         
+
 
           {/* del below */}
           
