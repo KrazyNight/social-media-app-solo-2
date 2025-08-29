@@ -1,3 +1,4 @@
+"use client"
 import { openCommentModal, setCommentDetails,  } from "@/redux/slices/modalSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import {
